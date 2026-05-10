@@ -16,8 +16,7 @@
         <h2 style="color: #3b82f6;">Halo!</h2>
         <p>Anda menerima email ini karena kami menerima permintaan reset password untuk akun Anda di <strong>PREDCRYPT</strong>.</p>
         <p>Silakan klik tombol di bawah ini untuk mereset password Anda. Link ini akan kedaluwarsa dalam 60 menit.</p>
-        
-        <a href="{{ url('reset-password/'.$token.'?email='.$email) }}" class="button">Reset Password</a>
+        <a href="{{ url('reset-password/'.$token.'?email='.$email) }}" class="button" style="color: #ffffff;">Reset Password</a>
         
         <p>Jika Anda tidak merasa melakukan permintaan ini, abaikan saja email ini.</p>
         <p>Salam,<br>Tim PREDCRYPT</p>
