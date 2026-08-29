@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('preferences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('favorite_coin');  // e.g. 'bitcoin'
+            $table->string('favorite_coin', 50);  // e.g. 'bitcoin'
             $table->timestamps();
 
             $table->unique(['user_id', 'favorite_coin']);

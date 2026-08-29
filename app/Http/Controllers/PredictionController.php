@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use Illuminate\Support\Facades\Http;
 use App\Models\Prediction;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,55 +20,57 @@ class PredictionController extends Controller
 
         $coinId = $request->coin;
 
-        // Tentukan path ke script python
-        $pythonScript = base_path('python/predict.py');
-
         // Ambil harga live dan data historis dari CoinGeckoService
         $coinGecko = app(\App\Services\CoinGeckoService::class);
         $livePrice = $coinGecko->getCoinPrice($coinId);
         $historicalData = $coinGecko->getHistoricalPrices($coinId, 30);
         
-        // Simpan data historis ke file temporary agar Python bisa membacanya tanpa kena rate limit
-        $tempFile = storage_path("app/private/temp_history_{$coinId}.json");
-        if (!file_exists(storage_path('app/private'))) {
-            mkdir(storage_path('app/private'), 0755, true);
+        // Format historical data to match Python expectation: list of [timestamp, price]
+        $formattedHistory = [];
+        if (is_array($historicalData)) {
+            foreach ($historicalData as $d) {
+                if (isset($d['timestamp']) && isset($d['price'])) {
+                    $formattedHistory[] = [$d['timestamp'], $d['price']];
+                }
+            }
         }
-        file_put_contents($tempFile, json_encode($historicalData));
 
-        // Jalankan Process
-        // Pastikan python atau python3 dikenali di sistem Anda
-        $process = new Process(['python', $pythonScript, $coinId, $livePrice, $tempFile]);
-        $process->setTimeout(60); // Timeout 60 detik (karena fetch API + ML)
+        // Dapatkan URL API Hugging Face dari .env
+        $apiUrl = env('HUGGINGFACE_API_URL', 'http://127.0.0.1:8000') . '/predict';
 
         try {
-            $process->mustRun();
-            
-            // Ambil output JSON dari Python
-            $output = $process->getOutput();
-            $result = json_decode($output, true);
+            // Panggil API Python di Hugging Face
+            $response = Http::timeout(60)->post($apiUrl, [
+                'coin' => $coinId,
+                'live_price' => $livePrice,
+                'historical_data' => !empty($formattedHistory) ? $formattedHistory : null
+            ]);
 
-            if (isset($result['error'])) {
-                return response()->json(['error' => $result['error']], 400);
+            if ($response->failed()) {
+                $errorMsg = $response->json('detail') ?? 'Terjadi kesalahan saat menghubungi API Prediksi.';
+                return response()->json(['error' => $errorMsg], $response->status());
             }
 
+            $result = $response->json();
+
             // Simpan riwayat prediksi ke Database jika user sedang login
-            if (Auth::check()) {
+            if (Auth::check() && isset($result['predicted_price'])) {
                 Prediction::create([
                     'user_id' => Auth::id(),
                     'coin' => $coinId,
-                    'current_price' => $result['current_price'],
+                    'current_price' => $result['current_price'] ?? 0,
                     'predicted_price' => $result['predicted_price'],
-                    'mae' => $result['mae'],
-                    'rmse' => $result['rmse']
+                    'mae' => $result['mae'] ?? 0,
+                    'rmse' => $result['rmse'] ?? 0
                 ]);
             }
 
             return response()->json($result);
 
-        } catch (ProcessFailedException $exception) {
-            \Log::error('Python Script Error: ' . $exception->getMessage());
+        } catch (\Exception $exception) {
+            \Log::error('API Prediction Error: ' . $exception->getMessage());
             return response()->json([
-                'error' => 'Terjadi kesalahan saat memproses model Machine Learning.'
+                'error' => 'Gagal menghubungi server Machine Learning (Hugging Face).'
             ], 500);
         }
     }

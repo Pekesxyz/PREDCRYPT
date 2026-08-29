@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('price_alerts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('coin');           // e.g. 'bitcoin'
-            $table->decimal('target_price', 20, 8);
+            $table->string('coin', 50);          // e.g. 'bitcoin'
+            $table->decimal('target_price', 15, 2);
             $table->boolean('is_triggered')->default(false);
-            $table->string('direction')->default('above'); // 'above' or 'below'
+            $table->string('direction', 10)->default('above'); // 'above' or 'below'
             $table->timestamps();
         });
     }

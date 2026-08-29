@@ -341,7 +341,7 @@ window.showToast = function(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = "glass-card-static p-4 mb-3 animate-fade-in-up flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border-l-4 " + (type === 'success' ? 'border-[var(--color-success)] text-[var(--color-text-primary)]' : 'border-[var(--color-danger)] text-[var(--color-danger)]');
 
-    const icon = type === 'success' ? '<svg class="w-5 h-5 text-[var(--color-success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : '<svg class="w-5 h-5 text-[var(--color-danger)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+    const icon = type === 'success' ? '<svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : '<svg class="w-5 h-5 text-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
     toast.innerHTML = `<span class="shrink-0">${icon}</span><p class="text-sm font-medium">${message}</p>`;
 
     container.appendChild(toast);

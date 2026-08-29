@@ -15,8 +15,11 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 from datetime import datetime, timedelta
 
 
-def fetch_historical_data(coin_id, days=30, temp_file=None):
+def fetch_historical_data(coin_id, days=30, temp_file=None, historical_data=None):
     """Ambil data historis harga dari JSON yang dikirim Laravel, atau API jika tidak ada"""
+    if historical_data is not None:
+        return historical_data
+        
     if temp_file:
         try:
             with open(temp_file, 'r') as f:
@@ -67,11 +70,11 @@ def generate_fallback_data(coin_id, days):
     return prices
 
 
-def run_prediction(coin_id, live_price=None, temp_file=None):
+def run_prediction(coin_id, live_price=None, temp_file=None, historical_data=None):
     """Jalankan Linear Regression pada data historis"""
 
     # 1. Ambil data historis
-    raw_prices = fetch_historical_data(coin_id, days=30, temp_file=temp_file)
+    raw_prices = fetch_historical_data(coin_id, days=30, temp_file=temp_file, historical_data=historical_data)
 
     if live_price is not None:
         # Memastikan titik terakhir di grafik adalah waktu saat ini (Hari ini)

@@ -80,9 +80,9 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach([
-                    ['step' => '01', 'title' => 'Pilih Koin', 'desc' => 'Pilih cryptocurrency yang ingin Anda prediksi dari daftar koin yang tersedia.'],
-                    ['step' => '02', 'title' => 'Jalankan Prediksi', 'desc' => 'Sistem mengambil data historis dan menjalankan model Linear Regression secara otomatis.'],
-                    ['step' => '03', 'title' => 'Analisis Hasil', 'desc' => 'Lihat hasil prediksi beserta grafik interaktif dan metrik evaluasi model (MAE & RMSE).'],
+                    ['step' => '1', 'title' => 'Pilih Koin', 'desc' => 'Pilih cryptocurrency yang ingin Anda prediksi dari daftar koin yang tersedia.'],
+                    ['step' => '2', 'title' => 'Jalankan Prediksi', 'desc' => 'Sistem mengambil data historis dan menjalankan model Linear Regression secara otomatis.'],
+                    ['step' => '3', 'title' => 'Analisis Hasil', 'desc' => 'Lihat hasil prediksi beserta grafik interaktif dan metrik evaluasi model (MAE & RMSE).'],
                 ] as $i => $item)
                 <div class="glass-card-static p-8 text-center scroll-reveal" style="animation-delay: {{ $i * 150 }}ms">
                     <div class="text-xs font-bold text-accent mb-2">LANGKAH {{ $item['step'] }}</div>

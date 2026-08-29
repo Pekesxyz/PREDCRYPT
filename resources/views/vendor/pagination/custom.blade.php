@@ -34,6 +34,46 @@
             </a>
         @endif
 
+        {{-- Custom Logic for Max 5 Elements --}}
+        @php
+            $customElements = [];
+            $lastPage = $paginator->lastPage();
+            $currentPage = $paginator->currentPage();
+
+            if ($lastPage <= 5) {
+                $customElements[] = range(1, $lastPage);
+            } else {
+                if ($currentPage <= 3) {
+                    $customElements[] = range(1, 4);
+                    $customElements[] = '...';
+                    $customElements[] = [$lastPage];
+                } elseif ($currentPage >= $lastPage - 2) {
+                    $customElements[] = [1];
+                    $customElements[] = '...';
+                    $customElements[] = range($lastPage - 3, $lastPage);
+                } else {
+                    $customElements[] = [1];
+                    $customElements[] = '...';
+                    $customElements[] = range($currentPage - 1, $currentPage + 1);
+                    $customElements[] = '...';
+                    $customElements[] = [$lastPage];
+                }
+            }
+            
+            $elements = [];
+            foreach ($customElements as $item) {
+                if (is_string($item)) {
+                    $elements[] = $item;
+                } else {
+                    $urls = [];
+                    foreach ($item as $page) {
+                        $urls[$page] = $paginator->url($page);
+                    }
+                    $elements[] = $urls;
+                }
+            }
+        @endphp
+
         {{-- Pagination Elements --}}
         @foreach ($elements as $element)
             {{-- "Three Dots" Separator --}}

@@ -282,6 +282,8 @@
                         change: data.change,
                     };
 
+                    this.loading = false;
+
                     this.$nextTick(() => {
                         this.chart = window.createPredictionChart(
                             'prediction-chart', 
@@ -293,7 +295,6 @@
 
                 } catch (error) {
                     alert('Error: ' + error.message);
-                } finally {
                     this.loading = false;
                 }
             },

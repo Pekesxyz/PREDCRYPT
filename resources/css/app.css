@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -7,7 +7,14 @@
 @source '../**/*.js';
 
 @layer base {
-    img, svg, video, canvas, audio, iframe, embed, object {
+    img,
+    svg,
+    video,
+    canvas,
+    audio,
+    iframe,
+    embed,
+    object {
         vertical-align: unset;
     }
 }
@@ -18,7 +25,7 @@
 
 @theme {
     /* Typography */
-    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
     /* Colors - Dark Mode (Default) */
     --color-bg-primary: #0a0e1a;
@@ -54,7 +61,7 @@ html {
 }
 
 body {
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
     width: 100%;
@@ -182,7 +189,7 @@ body.light-mode .navbar {
 }
 
 .nav-link.active::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -4px;
     left: 0;
@@ -207,8 +214,12 @@ body.light-mode .navbar {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideInRight {
@@ -223,7 +234,8 @@ body.light-mode .navbar {
 }
 
 @keyframes pulse-glow {
-    0%, 100% {
+    0%,
+    100% {
         box-shadow: 0 0 20px var(--color-accent);
     }
     50% {
@@ -232,13 +244,22 @@ body.light-mode .navbar {
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 @keyframes ticker-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 /* Responsive Typography Fixes */
@@ -247,7 +268,7 @@ body.light-mode .navbar {
         font-size: 2.25rem !important; /* 36px */
         line-height: 2.5rem !important;
     }
-    
+
     h2 {
         font-size: 1.75rem !important; /* 28px */
     }
@@ -285,11 +306,21 @@ body.light-mode .navbar {
 }
 
 /* Stagger delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
+.delay-100 {
+    animation-delay: 100ms;
+}
+.delay-200 {
+    animation-delay: 200ms;
+}
+.delay-300 {
+    animation-delay: 300ms;
+}
+.delay-400 {
+    animation-delay: 400ms;
+}
+.delay-500 {
+    animation-delay: 500ms;
+}
 
 /* Scroll reveal (initial hidden state) */
 .scroll-reveal {
@@ -384,8 +415,12 @@ select.form-input {
    Skeleton Loading
    ============================================ */
 @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 .skeleton {
@@ -478,14 +513,18 @@ select.form-input {
 }
 
 .bg-radial-glow::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -200px;
     left: 50%;
     transform: translateX(-50%);
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+    background: radial-gradient(
+        circle,
+        var(--color-accent) 0%,
+        transparent 70%
+    );
     opacity: 0.08;
     pointer-events: none;
     z-index: 0;
@@ -536,7 +575,8 @@ select.form-input {
     transition: all 0.3s ease;
 }
 
-.moon-icon-wrapper, .sun-icon-wrapper {
+.moon-icon-wrapper,
+.sun-icon-wrapper {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -559,7 +599,7 @@ select.form-input {
 }
 
 .theme-toggle::after {
-    content: '';
+    content: "";
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -585,11 +625,21 @@ body.light-mode .theme-toggle::after {
 }
 
 /* Animation Delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
+.delay-100 {
+    animation-delay: 100ms;
+}
+.delay-200 {
+    animation-delay: 200ms;
+}
+.delay-300 {
+    animation-delay: 300ms;
+}
+.delay-400 {
+    animation-delay: 400ms;
+}
+.delay-500 {
+    animation-delay: 500ms;
+}
 
 /* Pagination Styling */
 .pagination-container nav {
@@ -618,7 +668,8 @@ nav[role="navigation"] span[aria-current="page"] span {
     border-color: var(--color-accent) !important;
 }
 
-nav[role="navigation"] a, nav[role="navigation"] span {
+nav[role="navigation"] a,
+nav[role="navigation"] span {
     border-radius: 8px !important;
     margin: 0 2px;
     border-color: var(--color-border) !important;

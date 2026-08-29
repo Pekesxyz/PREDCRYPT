@@ -19,8 +19,7 @@ class HistoryController extends Controller
             $query->where('coin', $request->coin);
         }
 
-        $histories = $query->paginate(10);
-
+        $histories = $query->paginate(10)->onEachSide(1);
         return view('pages.history', [
             'histories' => $histories,
             'currentFilter' => $request->coin ?? 'all'
